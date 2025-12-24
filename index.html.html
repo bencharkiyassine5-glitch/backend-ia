@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Sito IA</title>
+</head>
+<body>
+
+<h2>Chiedi qualsiasi cosa all’IA</h2>
+
+<input id="domanda" placeholder="Scrivi la tua domanda">
+<button onclick="chiedi()">Invia</button>
+
+<p id="risposta"></p>
+
+<script>
+async function chiedi() {
+  const domanda = document.getElementById("domanda").value;
+  document.getElementById("risposta").innerText = "Sto pensando...";
+
+  const risposta = await fetch("/api/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ domanda })
+  });
+
+  const dati = await risposta.json();
+  document.getElementById("risposta").innerText = dati.risposta;
+}
+</script>
+
+</body>
+</html>
+
+
